@@ -1,8 +1,11 @@
-require('dotenv').config();
-const express = require('express');
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import router from './src/routes/index.routes.js';
+
+dotenv.config();
+
 const app = express();
-const mongoose = require('mongoose');
-const router = require('./src/routes/index.routes.js');
 
 const { PORT, MONGO_DB } = process.env;
 
