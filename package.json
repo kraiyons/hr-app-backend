@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "webpack --mode development && nodemon",
+    "webpack": "webpack --config webpack.config.cjs"
   },
   "repository": {
     "type": "git",
@@ -18,8 +20,22 @@
   },
   "homepage": "https://github.com/kraiyons/hr-app-backend#readme",
   "dependencies": {
+    "@babel/node": "^7.14.9",
+    "@babel/polyfill": "^7.12.1",
+    "@types/mongoose": "^5.11.97",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.13.5"
+    "mongoose": "^5.13.5",
+    "nodemon": "^2.0.12",
+    "path": "^0.12.7",
+    "ts-loader": "^9.2.5",
+    "ts-node": "^10.2.0",
+    "webpack": "^5.50.0"
+  },
+  "devDependencies": {
+    "@types/webpack-node-externals": "^2.5.2",
+    "typescript": "^4.3.5",
+    "webpack-cli": "^4.7.2",
+    "webpack-node-externals": "^3.0.0"
   }
 }
