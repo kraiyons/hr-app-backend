@@ -8,17 +8,11 @@ import mongoose from 'mongoose';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
-/**
- * Search Students by name or skills
- *
- * @param req
- * @param res
- */
-async function getStudents(
+async function getUsers(
   req: Request<UserSearchRequestDto>,
   res: Response<Array<UserInterface>>
 ) {
-  const query = Student.find();
+  const query = User.find();
   const filterQueryArray: Array<FilterQuery<UserInterface>> = new Array<
     FilterQuery<UserInterface>
   >();
@@ -46,13 +40,7 @@ async function getStudents(
     });
 }
 
-/**
- * Insert new Student
- *
- * @param req
- * @param res
- */
-async function insertStudent(req: Request<StudentInterface>, res: Response) {
+async function insertUser(req: Request<UserInterface>, res: Response) {
   //req.body._id = new mongoose.Types.ObjectId();
   req.body._id = uuidv4();
   console.log(`_ID: ${req.body._id}`);
@@ -62,7 +50,9 @@ async function insertStudent(req: Request<StudentInterface>, res: Response) {
     lastName: req.body.lastName,
     dateOfBirth: req.body.dateOfBirth,
     country: req.body.country,
-    skills: req.body.skills,
+    jobTitle: req.body.jobTitle,
+    dateJoined: req.body.dateJoined,
+    inactive: req.body.inactive,
   })
     .then((student) => {
       return res.status(200).send();
@@ -71,3 +61,5 @@ async function insertStudent(req: Request<StudentInterface>, res: Response) {
       console.log(err);
     });
 }
+
+export { getUsers, insertUser };
