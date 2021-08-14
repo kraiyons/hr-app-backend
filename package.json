@@ -2,10 +2,10 @@
   "name": "hr-app-backend",
   "version": "1.0.0",
   "description": "hr-app-backend",
-  "main": "server.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "node index.ts",
     "dev": "webpack --mode development && nodemon",
     "webpack": "webpack --config webpack.config.cjs"
   },
