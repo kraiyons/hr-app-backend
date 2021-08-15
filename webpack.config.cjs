@@ -6,7 +6,7 @@ const devtool = isProduction ? false : 'inline-source-map';
 
 const serverConfig = {
   target: 'node',
-  entry: './index.ts', // Server NodeJs file
+  entry: './src/index.ts', // Server NodeJs file
   output: {
     path: path.join(__dirname, 'dist'), // Specify bundle location directory
     filename: 'bundle.js',

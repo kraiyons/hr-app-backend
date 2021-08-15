@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import router from './src/routes/index.routes';
+import router from './routes/index.routes';
 
 dotenv.config();
 
@@ -16,6 +16,7 @@ mongoose.Promise = global.Promise;
 mongoose
   .connect(`${process.env.MONGO_DB}`, {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => {
