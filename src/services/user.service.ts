@@ -41,9 +41,7 @@ async function getUsers(
 }
 
 async function insertUser(req: Request<UserInterface>, res: Response) {
-  //req.body._id = new mongoose.Types.ObjectId();
-  req.body._id = uuidv4();
-  console.log(`_ID: ${req.body._id}`);
+  req.body._id = new mongoose.Types.ObjectId();
   await User.create({
     _id: req.body._id,
     firstName: req.body.firstName,
