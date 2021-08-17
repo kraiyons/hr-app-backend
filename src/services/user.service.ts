@@ -44,6 +44,7 @@ async function insertUser(req: Request<UserInterface>, res: Response) {
   req.body._id = new mongoose.Types.ObjectId();
   await User.create({
     _id: req.body._id,
+    email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     dateOfBirth: req.body.dateOfBirth,
@@ -53,10 +54,18 @@ async function insertUser(req: Request<UserInterface>, res: Response) {
     inactive: req.body.inactive,
   })
     .then((student) => {
-      return res.status(200).send();
+      const responseMessage = {
+        status: 'success',
+        message: `Succesfully inserted the user: ${student._id}`,
+      };
+      return res.status(200).send({ responseMessage });
     })
     .catch((err) => {
-      console.log(err);
+      const responseMessage = {
+        status: 'failure',
+        message: `Error encountered: ${err}`,
+      };
+      return res.status(400).send(responseMessage);
     });
 }
 
