@@ -63,7 +63,7 @@ async function insertUser(req: Request<UserInterface>, res: Response) {
     .catch((err) => {
       const responseMessage = {
         status: 'failure',
-        message: `Error encountered: ${err}`,
+        message: err,
       };
       return res.status(400).send(responseMessage);
     });

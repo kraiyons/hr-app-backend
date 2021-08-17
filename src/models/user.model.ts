@@ -22,16 +22,16 @@ export interface UserInterface extends Document {
 const UserSchema: Schema = new Schema(
   {
     _id: { type: ObjectId, unique: true },
-    email: { type: String, required: false },
-    password: { type: String, required: false },
-    firstName: { type: String, required: false },
-    lastName: { type: String, required: false },
-    middleName: { type: String, required: false },
-    dateOfBirth: { type: Date, required: false },
-    country: { type: String, required: false },
-    jobTitle: { type: String, required: false },
-    dateJoined: { type: Date, required: false },
-    inactive: { type: Boolean, default: false },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    middleName: { type: String, required: true },
+    dateOfBirth: { type: Date, required: true },
+    country: { type: String, required: true },
+    jobTitle: { type: String, required: true },
+    dateJoined: { type: Date, required: true },
+    inactive: { type: Boolean, default: true },
   },
   {
     collection: 'users', // Without this attribute the collection won't be retrieved
