@@ -18,7 +18,6 @@ async function getUsers(
   const filterQueryArray: Array<FilterQuery<UserInterface>> = new Array<
     FilterQuery<UserInterface>
   >();
-  filterQueryArray.push({ inactive: { $ne: true } });
 
   if (req.body.name) {
     filterQueryArray.push({ firstName: { $regex: req.body.name } });
@@ -34,7 +33,6 @@ async function getUsers(
     .sort({ firstName: 1, lastName: 1 })
     .exec()
     .then((students) => {
-      console.log('**** SUCCESS');
       return res.send(students);
     })
     .catch((err) => {

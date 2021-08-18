@@ -31,7 +31,7 @@ const UserSchema: Schema = new Schema(
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    middleName: { type: String, required: true },
+    middleName: { type: String, required: false },
     dateOfBirth: { type: Date, required: true },
     country: { type: String, required: true },
     jobTitle: { type: String, required: true },
