@@ -5,6 +5,11 @@ export interface UserSearchRequestDto {
   name: string;
 }
 
+export interface UserLoginDto {
+  email: string;
+  password: string;
+}
+
 export interface UserInterface extends Document {
   _id: ObjectId;
   email: String;

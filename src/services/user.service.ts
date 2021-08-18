@@ -1,12 +1,14 @@
-import User, {
-  UserInterface,
-  UserSearchRequestDto,
-} from '../models/user.model';
 import { Request, Response } from 'express';
 import { FilterQuery } from 'mongoose';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import _ from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
+
+import User, {
+  UserInterface,
+  UserLoginDto,
+  UserSearchRequestDto,
+} from '../models/user.model';
 
 async function getUsers(
   req: Request<UserSearchRequestDto>,
@@ -42,9 +44,11 @@ async function getUsers(
 
 async function insertUser(req: Request<UserInterface>, res: Response) {
   req.body._id = new mongoose.Types.ObjectId();
+  const password = bcrypt.hashSync(req.body.password, 10);
   await User.create({
     _id: req.body._id,
     email: req.body.email,
+    password,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     dateOfBirth: req.body.dateOfBirth,
@@ -66,6 +70,31 @@ async function insertUser(req: Request<UserInterface>, res: Response) {
         message: err,
       };
       return res.status(400).send(responseMessage);
+    });
+}
+
+async function login(req: Request<UserLoginDto>, res: Response) {
+  const query = User.find();
+  const filterQueryArray: Array<FilterQuery<UserInterface>> = new Array<
+    FilterQuery<UserInterface>
+  >();
+
+  if (req.body.email) {
+    filterQueryArray.push({ email: { $regex: req.body.email } });
+  }
+
+  if (!_.isEmpty(filterQueryArray)) {
+    query.or(filterQueryArray);
+  }
+
+  await query
+    .exec()
+    .then((students) => {
+      // TODO: login logic, https://www.thepolyglotdeveloper.com/2019/02/hash-password-data-mongodb-mongoose-bcrypt/
+      return res.send(students);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 
