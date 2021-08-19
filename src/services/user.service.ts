@@ -72,7 +72,7 @@ async function insertUser(req: Request<UserInterface>, res: Response) {
 }
 
 async function login(req: Request<UserLoginDto>, res: Response) {
-  const query = User.find();
+  const query = User.findOne();
   const filterQueryArray: Array<FilterQuery<UserInterface>> = new Array<
     FilterQuery<UserInterface>
   >();
@@ -87,13 +87,22 @@ async function login(req: Request<UserLoginDto>, res: Response) {
 
   await query
     .exec()
-    .then((students) => {
-      // TODO: login logic, https://www.thepolyglotdeveloper.com/2019/02/hash-password-data-mongodb-mongoose-bcrypt/
-      return res.send(students);
+    .then((user) => {
+      if (user) {
+        if (bcrypt.compareSync(req.body.password, user.password))
+          return res.send({
+            status: 'success',
+            message: 'Succesfull login',
+          });
+      }
+      return res.send({
+        status: 'failed',
+        message: 'You have supplied invalid credentials.',
+      });
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-export { getUsers, insertUser };
+export { getUsers, insertUser, login };

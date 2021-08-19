@@ -1,11 +1,12 @@
 import { Request, Response, Router } from 'express';
-import { UserInterface, UserSearchRequestDto } from '../models/user.model';
-import { getUsers, insertUser } from '../services/user.service';
+import {
+  UserInterface,
+  UserLoginDto,
+  UserSearchRequestDto,
+} from '../models/user.model';
+import { getUsers, insertUser, login } from '../services/user.service';
 const userRouter = Router();
 
-/**
- * POST: Get Students list
- */
 userRouter.post(
   '/list',
   (req: Request<UserSearchRequestDto>, res: Response) => {
@@ -13,11 +14,12 @@ userRouter.post(
   }
 );
 
-/**
- * POST: Get Students list
- */
 userRouter.post('/', (req: Request<UserInterface>, res: Response) => {
   insertUser(req, res);
+});
+
+userRouter.post('/login', (req: Request<UserLoginDto>, res: Response) => {
+  login(req, res);
 });
 
 export default userRouter;
