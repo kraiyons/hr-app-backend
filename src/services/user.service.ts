@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { FilterQuery } from 'mongoose';
-import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import _ from 'lodash';
 
@@ -41,10 +40,8 @@ async function getUsers(
 }
 
 async function insertUser(req: Request<UserInterface>, res: Response) {
-  req.body._id = new mongoose.Types.ObjectId();
   const password = bcrypt.hashSync(req.body.password, 10);
   await User.create({
-    _id: req.body._id,
     email: req.body.email,
     password,
     firstName: req.body.firstName,

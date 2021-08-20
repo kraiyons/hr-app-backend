@@ -8,13 +8,12 @@ dotenv.config();
 const app = express();
 
 const { PORT, MONGO_DB } = process.env;
-console.log({ PORT, MONGO_DB, process });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose.Promise = global.Promise;
 mongoose
-  .connect(`${process.env.MONGO_DB}`, {
+  .connect(`${MONGO_DB}`, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

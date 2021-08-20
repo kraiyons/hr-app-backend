@@ -26,7 +26,6 @@ export interface UserInterface extends Document {
 
 const UserSchema: Schema = new Schema(
   {
-    _id: { type: ObjectId, unique: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     firstName: { type: String, required: true },
