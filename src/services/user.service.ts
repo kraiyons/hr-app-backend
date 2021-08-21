@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { FilterQuery } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 import _ from 'lodash';
 
 import User, {
@@ -86,13 +88,23 @@ async function login(req: Request<UserLoginDto>, res: Response) {
     .exec()
     .then((user) => {
       if (user) {
-        if (bcrypt.compareSync(req.body.password, user.password))
-          return res.send({
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+          const { TOKEN_KEY } = process.env;
+          const token = jwt.sign(
+            { user_id: user._id, email: user.email },
+            TOKEN_KEY,
+            {
+              expiresIn: '2h',
+            }
+          );
+          return res.status(200).send({
             status: 'success',
             message: 'Succesfull login',
+            token,
           });
+        }
       }
-      return res.send({
+      return res.status(400).send({
         status: 'failed',
         message: 'You have supplied invalid credentials.',
       });
