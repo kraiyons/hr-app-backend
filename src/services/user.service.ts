@@ -89,10 +89,10 @@ async function login(req: Request<UserLoginDto>, res: Response) {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          const { TOKEN_KEY } = process.env;
+          const { JWT_SECRET } = process.env;
           const token = jwt.sign(
             { user_id: user._id, email: user.email },
-            TOKEN_KEY,
+            JWT_SECRET,
             {
               expiresIn: '2h',
             }

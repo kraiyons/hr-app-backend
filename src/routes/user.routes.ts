@@ -1,10 +1,14 @@
 import { Request, Response, Router } from 'express';
+import expressJwt from 'express-jwt';
 import {
   UserInterface,
   UserLoginDto,
   UserSearchRequestDto,
 } from '../models/user.model';
 import { getUsers, insertUser, login } from '../services/user.service';
+
+const { JWT_SECRET } = process.env;
+
 const userRouter = Router();
 
 userRouter.post(
